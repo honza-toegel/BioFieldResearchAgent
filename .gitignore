@@ -1,0 +1,35 @@
+# Byte-compiled files
+*.py[cod]
+__pycache__/
+*.pyo
+
+# Virtual environment
+venv/
+env/
+ENV/
+.VENV/
+
+# Distribution / Packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Logs
+*.log
+
+# IDE-specific files (PyCharm)
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Python environment files
+*.env
+*.venv
+*.virtualenv
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Test
