@@ -23,12 +23,14 @@ export default defineComponent({
     let ws: WebSocket;
 
     const connectWebSocket = () => {
-      ws = new WebSocket('ws://localhost:8000/ws/realtime');
+      ws = new WebSocket('ws://localhost:8000/ws/realtime/dashboard');
       ws.onmessage = (event) => {
         const data = JSON.parse(event.data);
-        currentTime.value = data.current_time;
-        uptime.value = data.uptime;
-        userName.value = data.user_name;
+        if (data.current_time) {
+          currentTime.value = data.current_time;
+          uptime.value = data.uptime;
+          userName.value = data.user_name;
+        }
       };
     };
 
