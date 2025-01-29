@@ -6,7 +6,7 @@
           <h2 class="text-center">Live Stock Exchange Data</h2>
         </q-card-section>
         <q-card-section>
-          <vue-e-charts :options="chartOptionsSimple" style="height: 400px;" />
+          <vue-e-charts :options="chartOptionsSimple" ref="chartRef" style="height: 400px;" />
         </q-card-section>
       </q-card>
     </div>
@@ -105,6 +105,8 @@ const chartOptions = reactive<ChartOptions>({
     },
   ],
 });
+
+const chartRef = ref(); // Reference for ECharts component
 
 const { status, ws, close } = useWebSocket('ws://localhost:8000/ws/exchangerates', {
   autoReconnect: true,
