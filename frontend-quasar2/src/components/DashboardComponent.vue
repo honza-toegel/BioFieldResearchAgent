@@ -6,7 +6,7 @@
           <h2 class="text-center">Live Stock Exchange Data</h2>
         </q-card-section>
         <q-card-section>
-          <vue-e-charts :options="chartOptionsSimple" ref="chartRef" style="height: 400px;" />
+          <vue-e-charts :option="chartOptions" ref="chartRef" style="height: 400px;" />
         </q-card-section>
       </q-card>
     </div>
@@ -24,6 +24,19 @@ import { GridComponent, TooltipComponent } from 'echarts/components';
 
 // Register ECharts modules
 use([CanvasRenderer, LineChart, GridComponent, TooltipComponent]);
+
+function extractTimeFromISO(isoTimestamp: string): string {
+    try {
+        const date = new Date(isoTimestamp);
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        const seconds = date.getSeconds().toString().padStart(2, '0');
+        return `${hours}:${minutes}:${seconds}`;
+    } catch (error) {
+        console.error("Invalid ISO timestamp", error);
+        return "Invalid time";
+    }
+}
 
 type ExchangeRate = {
   assetName: string;        // Represents the name of the asset (e.g., "BTC")
@@ -60,22 +73,6 @@ type ChartOptions = {
 };
 
 // Reactive chart options
-const chartOptionsSimple = {
-  xAxis: {
-    type: 'category',
-    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-  },
-  yAxis: {
-    type: 'value'
-  },
-  series: [
-    {
-      data: [150, 230, 224, 218, 135, 147, 260],
-      type: 'line'
-    }
-  ]
-};
-
 const chartOptions = reactive<ChartOptions>({
   title: {
     text: 'Live Stock Exchange Data',
@@ -87,7 +84,7 @@ const chartOptions = reactive<ChartOptions>({
   xAxis: {
     type: 'category',
     boundaryGap: false,
-    data: ['1','2','3','4','5','6'],
+    data: [],
   },
   yAxis: {
     type: 'value',
@@ -101,7 +98,7 @@ const chartOptions = reactive<ChartOptions>({
       name: 'Exchange Rate',
       type: 'line',
       smooth: true,
-      data: [0.2, 0.3, 0.8, 1.2, 1.1, 0.8],
+      data: [],
     },
   ],
 });
@@ -114,17 +111,18 @@ const { status, ws, close } = useWebSocket('ws://localhost:8000/ws/exchangerates
 
 const updateChart = (exchangeRate: ExchangeRate) => {
   console.log('Update chart data: ' + JSON.stringify(exchangeRate));
-  if (!chartOptions.xAxis.data.includes(exchangeRate.timestamp)) {
-    chartOptions.xAxis.data.push(exchangeRate.timestamp);
-    if (chartOptions.series[0])
+  const timestamp = extractTimeFromISO(exchangeRate.timestamp);
+  if (!chartOptions.xAxis.data.includes(timestamp)) {
+    chartOptions.xAxis.data.push(timestamp);
+    if (chartOptions.series[0]) {
       chartOptions.series[0].data.push(exchangeRate.exchangeRate);
 
-    // Limit to the latest 50 points
-    if (chartOptions.xAxis.data.length > 50) {
-      chartOptions.xAxis.data.shift();
-      if (chartOptions.series[0])
+      // Limit to the latest 50 points
+      if (chartOptions.xAxis.data.length > 50) {
+        chartOptions.xAxis.data.shift();
         chartOptions.series[0].data.shift();
-    }
+      }
+    } 
   }
 };
 
