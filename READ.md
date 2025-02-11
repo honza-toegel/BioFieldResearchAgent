@@ -94,7 +94,7 @@ quasar dev # or: yarn quasar dev # or: npx quasar dev
 
 ## Starting backend
 cd backend
-uvicorn test_backend:app --reload
+python fastapi_backend.py
 
 
 
