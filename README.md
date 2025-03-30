@@ -12,12 +12,14 @@ Researcher can interact with the agent using natural language to define research
 
 The agent then formulates a comprehensive research plan, collects and processes relevant data using connected bio-field sensing devices, conducts analyses, and generates reports and communicates interactivelly with researchers.
 
+![Research Diagram](assets/BioFieldSignalResearch.drawio.svg)
+
 ---
 ## Features
 ### 🌿 Research Planning
 - Generates structured research plans based on user input
 - Proposes multiple research options, incorporating insights from the latest research
-- Designs experiments with proper control groups
+- Design experiments with proper control groups
 
 ### 📡 Sensor Raw-Data Collection 
 - Configures bio-field sensing devices (electric, magnetic, quantum, humidity, temp, light, ...)
