@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/stableDifusionTradingBot.iml" filepath="$PROJECT_DIR$/.idea/stableDifusionTradingBot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/BioFieldResearchAgent.iml" filepath="$PROJECT_DIR$/.idea/BioFieldResearchAgent.iml" />
     </modules>
   </component>
 </project>
