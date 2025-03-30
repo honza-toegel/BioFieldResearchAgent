@@ -97,8 +97,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - 🌍 Cloud-based research collaboration
 - 📈 Advanced visualization tools for data interpretation
 
----
-## Contact
-For inquiries or collaboration, reach out via GitHub or email: [your-email@example.com](mailto:your-email@example.com).
-
-
