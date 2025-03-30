@@ -19,16 +19,29 @@ The agent then formulates a comprehensive research plan, collects and processes 
 - Proposes multiple research options, incorporating insights from the latest research
 - Designs experiments with proper control groups
 
-### 📡 Sensor Data Collection 
+### 📡 Sensor Raw-Data Collection 
 - Configures bio-field sensing devices (electric, magnetic, quantum, humidity, temp, light, ...)
 - Determines optimal data resolution 
-- Determines data filtering (ex. low-pass)
 - Ensures seamless integration with past collected data
 
+### :chart_with_upwards_trend: Data Pre-Processing
+- Plan suitable data processing pipeline
+  - Like graph where the nodes represent data-transformation, and edges data-flow
+- Possible pre-processing functions:
+  - Data filtering (low-pass, denoise,..)
+  - FFT fast fourier transform 
+  - Standard deviations
+  - Mean square
+  
 ### 📊 Data Processing & Analysis
-- Prepares post-processing pipelines (FFT, standard deviations, mean squares, etc.)
 - Identifies and extracts key features from bio-field data
-- Detects rhythms, correlations, and anomalies, synchronicities, ..
+- Prepares data-analysis pipelines
+  - Like graph where the nodes represent data-analysis, and edges data-flow
+- Possible data analysis functions:
+  - Detecting rhythms
+  - Detecting correlations
+  - Detecting anomalies
+  - Detecting synchronicities
 
 ### 🔍 Real-Time Adjustments
 - Monitors data streams and adjusts collection parameters in real-time
