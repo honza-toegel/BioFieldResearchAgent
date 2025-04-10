@@ -4,6 +4,8 @@
 **BioFieldResearchAgent** is an advanced research assistant designed to explore the bio-fields of trees and plants, particularly in interaction with humans. Built with [LangGraph](https://github.com/langchain-ai/langgraph), this smart research agent autonomously plans and executes bio-field research, leveraging the latest insights from scientific literature and real-time sensor data.
 
 Researcher can interact with the agent using natural language to define research goals, such as:
+> *"Figure out if the trees can predict weather, lets focus on bio-field of the pine trees at freq between 1kHz and 10kHz, lets see if there is any correlation with the captured temperature"*
+
 > *"Today we will be meditating close to oak trees between 10:00-10:30. The focus is to check if that has some impact on the tree bio-fields (electric and magnetic activity) compared with a control group."*
 
 > *"Please investigate whether there is a circadian rhythm in the biofield of banana trees, focusing on the electric and magnetic fields in relation to daylight and astronomical time (position of the sun and moon)"*
