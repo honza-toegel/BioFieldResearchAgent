@@ -26,7 +26,9 @@ The agent then formulates a comprehensive research plan, collects and processes 
 ### 📡 Sensor Raw-Data Collection 
 - Configures bio-field sensing devices (electric, magnetic, quantum, humidity, temp, light, ...)
 - Determines optimal data resolution 
-- Ensures seamless integration with past collected data
+- Ensures seamless integration with past collected data 
+  - Offline data pre-collection when outside
+  - Online-backup of pre-collected data for the deep-analysis
 
 ### :chart_with_upwards_trend: Data Pre-Processing
 - Plan suitable data processing pipeline
@@ -46,6 +48,7 @@ The agent then formulates a comprehensive research plan, collects and processes 
   - Detecting correlations
   - Detecting anomalies
   - Detecting synchronicities
+  - Detecting action/reaction behaviour
 
 ### 🔍 Real-Time Adjustments
 - Monitors data streams and adjusts collection parameters in real-time
@@ -70,16 +73,6 @@ Ensure you have the following installed:
 - [LangGraph](https://github.com/langchain-ai/langgraph)
 - [OpenAI API](https://openai.com/) (API key for LLM processing)
 - Required Python packages (install using the command below)
-
-### Setup
-```bash
-# Clone the repository
-git clone https://github.com/honza-toegel/BioFieldResearchAgent.git
-cd BioFieldResearchAgent
-
-# Install dependencies
-pip install -r requirements.txt
-```
 
 ---
 ## Contributing
