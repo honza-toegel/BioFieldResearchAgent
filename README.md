@@ -14,7 +14,7 @@ Researcher can interact with the agent using natural language to define research
 
 The agent then formulates a comprehensive research plan, collects and processes relevant data using connected bio-field sensing devices, conducts analyses, and generates reports and communicates interactivelly with researchers.
 
-![Research Diagram](assets/BioFieldSignalResearch.drawio.svg)
+![Research Diagram](assets/BioFieldSignalResearch-BusinessSchema.drawio.svg)
 
 ---
 ## Features
@@ -66,6 +66,14 @@ The agent then formulates a comprehensive research plan, collects and processes 
 - Suggests further research directions
 
 ---
+## Data Model
+- The data model must be capable to persist following data:
+- Research experiment intention, description and used participants and devices/sensors
+- Metadata about devices and sensors used for data collection (sometimes hardcoded in firmware of device)
+- Collected data from sensors - can be used in multiple experiments (split into batches and stored on fs or minio)
+- Data send to sensors (split into batches and stored on fs or minio)
+  
+![Research Diagram](assets/BioFieldSignalResearch-DataModel.drawio.svg)
 ## Installation
 ### Prerequisites
 Ensure you have the following installed:
