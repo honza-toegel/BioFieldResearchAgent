@@ -26,6 +26,9 @@ dist/
 
 # Python environment files
 *.env
+.env
+.env.*
+!env.example
 *.venv
 *.virtualenv
 

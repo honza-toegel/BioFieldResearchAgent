@@ -74,14 +74,6 @@ The agent then formulates a comprehensive research plan, collects and processes 
 - Data send to sensors (split into batches and stored on fs or minio)
   
 ![Research Diagram](assets/BioFieldSignalResearch-DataModel.drawio.svg)
-## Installation
-### Prerequisites
-Ensure you have the following installed:
-- Python 3.8+
-- [LangGraph](https://github.com/langchain-ai/langgraph)
-- [OpenAI API](https://openai.com/) (API key for LLM processing)
-- Required Python packages (install using the command below)
-
 ---
 ## Contributing
 Contributions are welcome! Feel free to:
