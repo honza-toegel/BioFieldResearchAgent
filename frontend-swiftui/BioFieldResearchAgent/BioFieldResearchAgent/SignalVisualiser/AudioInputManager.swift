@@ -9,7 +9,7 @@ import AVFoundation
 import SwiftUICore
 
 class AudioInputManager : ObservableObject {
-    @Published var signalDownsampleProcessor: SignalDownsampleProcessor = SignalDownsampleProcessor(circularBufferSize: 1024, downsamplingRate: 5, downsamplingMode: DownsamplingMode.peak)
+    @Published var signalDownsampleProcessor: SignalDownsampleProcessor = SignalDownsampleProcessor(circularBufferSize: 1024, downsamplingRate: 32, downsamplingMode: DownsamplingMode.peak)
     @Published var frequencySpectrumProcessor: FrequencySpectrumProcessor = FrequencySpectrumProcessor(bufferSize: 2048)
     
     private let engine = AVAudioEngine()

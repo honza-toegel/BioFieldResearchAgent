@@ -15,20 +15,27 @@ enum DownsamplingMode : String, CaseIterable, Identifiable {
     case first
 }
 
+// Desired work of SignalDownsampleProcessor
+// It process incoming updates of signal data of producer
+//       example - 44kHz mono audio are in iOS/macOS blocks of data 4800 values
+// It downsample directly those data and store them internally
+// It provides downsampled data to the consumers (Rendering pipeline 60fps)
+// It guarante that the consumer gets allways the whole buffer (not cutted by parallel writing of new data)
+
 class SignalDownsampleProcessor : ObservableObject, SignalProcessor {
-    private let circularBufferSize: Int
+    private let bufferSize: Int
     private let downsamplingRate: Int
     private let downsamplingMode: DownsamplingMode
     
-    private var circularBuffer: [Float]
-    private var circularIndex: Int = 0
-    private let bufferQueue = DispatchQueue(label: "circular.buffer.queue")
+    private let bufferQueue = DispatchQueue(label: "signal.queue.synchronization")
+    private var signalQueue = Array<Float>()
     
-    init(circularBufferSize: Int, downsamplingRate: Int = 1, downsamplingMode: DownsamplingMode = .peak) {
-        self.circularBufferSize = circularBufferSize
+    
+    init(bufferSize: Int, downsamplingRate: Int = 1, downsamplingMode: DownsamplingMode = .peak) {
+        self.bufferSize = bufferSize
         self.downsamplingRate = downsamplingRate
         self.downsamplingMode = downsamplingMode
-        self.circularBuffer = [Float](repeating: 0.0, count: circularBufferSize)
+        self.signalQueue.append(contentsOf: repeatElement(0.0, count: bufferSize))
     }
     
     func processIncomingAudioBuffer(_ signalDataBuffer: UnsafeBufferPointer<Float>) {
@@ -56,20 +63,16 @@ class SignalDownsampleProcessor : ObservableObject, SignalProcessor {
         }
 
         bufferQueue.sync {
-            for value in downsampledValues {
-                circularBuffer[circularIndex] = value
-                circularIndex = (circularIndex + 1) % circularBufferSize
+            signalQueue.append(contentsOf: downsampledValues)
+            if (signalQueue.count > bufferSize) {
+                signalQueue.removeFirst(signalQueue.count - bufferSize)
             }
         }
     }
 
     func getCurrentBuffer() -> [Float] {
         return bufferQueue.sync {
-            if circularIndex == 0 {
-                return circularBuffer
-            } else {
-                return Array(circularBuffer[circularIndex..<circularBufferSize] + circularBuffer[0..<circularIndex])
-            }
+            return signalQueue
         }
     }
 }

@@ -30,7 +30,7 @@ struct SignalBuffer {
 };
 
 // Fragment shader: render waveform
-fragment float4 fragment_osciloscope(VertexOut in [[stage_in]],
+fragment float4 fragment_osciloscope_(VertexOut in [[stage_in]],
                               constant float *signalBuffer [[buffer(5)]],
                               constant uint &signalBufferLength [[buffer(6)]],
                               constant float &signalGain [[buffer(7)]])
@@ -55,4 +55,31 @@ fragment float4 fragment_osciloscope(VertexOut in [[stage_in]],
     float colorOfSample = smoothstep(pointThickness, 0.0, abs(uv.y - signalSampleAmplitudeCentered));
 
     return float4(0.0, colorOfSample, 0.0, 1.0); // White waveform on black background
+}
+
+fragment float4 fragment_osciloscope(VertexOut in [[stage_in]],
+                                     constant float *signalBuffer [[buffer(5)]],
+                                     constant uint &signalBufferLength [[buffer(6)]],
+                                     constant float &signalGain [[buffer(7)]]) {
+    float2 uv = in.uv;
+    uint signalIndex = uint(uv.x * (signalBufferLength - 1));
+    signalIndex = clamp(signalIndex, 1u, signalBufferLength - 2); // Avoid out of bounds
+
+    float sampleA = signalBuffer[signalIndex - 1]; // * signalGain;
+    float sampleB = signalBuffer[signalIndex]; // * signalGain;
+
+    float yA = 0.5 + sampleA * 0.5;
+    float yB = 0.5 + sampleB * 0.5;
+
+    // Compute the line between yA and yB
+    float minY = min(yA, yB);
+    float maxY = max(yA, yB);
+
+    // Set a line thickness
+    float thickness = 0.1;
+
+    // Check if the current pixel's y (uv.y) lies within the vertical line span
+    float color = smoothstep(thickness, 0.0, abs(uv.y - yA)) * step(uv.y, maxY) * step(minY, uv.y);
+
+    return float4(0.0, color, 0.0, 1.0);
 }

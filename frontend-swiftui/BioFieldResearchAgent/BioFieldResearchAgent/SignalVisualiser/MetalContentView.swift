@@ -13,7 +13,7 @@ struct MetalContentView: View {
     //Settings
     @State private var selectedShader: ShaderType = .osciloscope
     @State private var selectedDownsamplingMode: DownsamplingMode = .average
-    @State private var selectedDownsamplingRate: Int = 8
+    @State private var selectedDownsamplingRate: Int = 32
     
     @StateObject var audioManager = AudioInputManager()
 
@@ -37,11 +37,18 @@ struct MetalContentView: View {
         }.onChange(of: selectedDownsamplingRate) { newMode in
             audioManager.configureCicularBuffer(circularBufferSize: 1024, downsamplingRate: selectedDownsamplingRate, downsamplingMode: selectedDownsamplingMode)
         }
-        Stepper("Downsampling Rate: \(selectedDownsamplingRate)", value: $selectedDownsamplingRate, in: 1...16)
+        Stepper("Downsampling Rate: \(selectedDownsamplingRate)", onIncrement: incrementDownsampleFreq, onDecrement: decrementDownsampleFreq)
             .onChange(of: selectedDownsamplingRate) { newRate in
                 audioManager.configureCicularBuffer(circularBufferSize: 1024, downsamplingRate: selectedDownsamplingRate, downsamplingMode: selectedDownsamplingMode)
             }
         .pickerStyle(SegmentedPickerStyle())
         .padding()
+    }
+    
+    private func incrementDownsampleFreq() -> Void {
+        selectedDownsamplingRate *= 2
+    }
+    private func decrementDownsampleFreq() -> Void {
+        selectedDownsamplingRate /= 2
     }
 }
